@@ -3,7 +3,6 @@ from django.db import models
 
 # Create your models here.
 class Photo(models.Model):
-
     LICENSES = (
         ('RIG', 'Copyright'),
         ('LEF', 'Copyleft'),
@@ -16,3 +15,6 @@ class Photo(models.Model):
     license = models.CharField(max_length=3, choices=LICENSES)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
+
+    def __str__(self):  # mifoto.__str__()
+        return self.name
