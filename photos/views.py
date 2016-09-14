@@ -9,6 +9,6 @@ def home(request):
     :param request: objeto HttpRequest con los datos de la peticion
     :return: objeto HttpResponse con los datos de la respuesta
     """
-    photos = Photo.objects.all()  # recupera todas las fotos de la BD
-    context = {'photos_list': photos}
+    photos = Photo.objects.all().order_by('-created')  # recupera todas las fotos de la BD
+    context = {'photos_list': photos[:4]}
     return render(request, "photos/home.html", context)

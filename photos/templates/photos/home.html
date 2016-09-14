@@ -8,9 +8,13 @@
     <h1>Bienvenido a Frikr</h1>
     <p>Como Flickr pero en Friki</p>
 
-    <h2>Últimas fotos publicadas</h2>
-    {% for photo in photos_list %}
-        <img src="{{ photo.url }}" alt="{{ photo.name }}" title="{{ photo.name }}" height="140">
-    {% endfor %}
+    {% if photos_list|length > 0 %}
+        <h2>Últimas fotos publicadas</h2>
+        {% for photo in photos_list %}
+            <img src="{{ photo.url }}" alt="{{ photo.name }}" title="{{ photo.name }}" height="140">
+        {% endfor %}
+    {% else %}
+        <h2>Únete a nosotros y sé el primero en publicar</h2>
+    {% endif %}
 </body>
 </html>
