@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-from photos.models import Photo
+from photos.models import Photo, VISIBILITY_PUBLIC
+
 
 # Create your views here.
 def home(request):
@@ -9,6 +10,7 @@ def home(request):
     :param request: objeto HttpRequest con los datos de la peticion
     :return: objeto HttpResponse con los datos de la respuesta
     """
-    photos = Photo.objects.all().order_by('-created')  # recupera todas las fotos de la BD
+    # recupera todas las fotos de la BD
+    photos = Photo.objects.filter(visibility=VISIBILITY_PUBLIC).order_by('-created')
     context = {'photos_list': photos[:4]}
     return render(request, "photos/home.html", context)
