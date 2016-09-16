@@ -32,3 +32,4 @@ def photo_detail(request, pk):
     photo = possible_photos[0]
     context = {'photo': photo}
     return render(request, 'photos/photo_detail.html', context)
+
