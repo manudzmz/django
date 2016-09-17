@@ -16,14 +16,14 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
-from photos.views import home, photo_detail, photo_creation
+from photos.views import HomeView, PhotoDetailView, PhotoCreationView
 from users.views import login, logout
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^login$', login),
     url(r'^logout$', logout),
-    url(r'^create$', photo_creation),
-    url(r'^photos/(?P<pk>[0-9]+)$', photo_detail),
-    url(r'^$', home)
+    url(r'^create$', PhotoCreationView.as_view()),
+    url(r'^photos/(?P<pk>[0-9]+)$', PhotoDetailView.as_view()),
+    url(r'^$', HomeView.as_view())
 ]
