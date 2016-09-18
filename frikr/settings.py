@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'photos',
     'users',
-    'frikr'
+    'frikr',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
