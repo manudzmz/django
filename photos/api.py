@@ -17,6 +17,9 @@ class PhotoListAPI(ListCreateAPIView):
     def get_serializer_class(self):
         return PhotoSerializer if self.request.method == "POST" else PhotoListSerializer
 
+    def perform_create(self, serializer):
+        return serializer.save(owner=self.request.user)
+
 
 class PhotoDetailAPI(RetrieveUpdateDestroyAPIView):
     """
@@ -27,3 +30,6 @@ class PhotoDetailAPI(RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         return PhotoQuerySet.get_photos_by_user(self.request.user)
+
+    def perform_update(self, serializer): 
+        return serializer.save(owner=self.request.user)
