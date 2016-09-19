@@ -14,7 +14,7 @@ class UserPermissions(BasePermission):
             return True
         if request.user.is_superuser:
             return True
-        if isinstance(view, UserDetailAPI):
+        if view.action in ("retrieve", "update", "destroy"):
             return True
         return False
 
