@@ -31,5 +31,5 @@ class PhotoDetailAPI(RetrieveUpdateDestroyAPIView):
     def get_queryset(self):
         return PhotoQuerySet.get_photos_by_user(self.request.user)
 
-    def perform_update(self, serializer): 
+    def perform_update(self, serializer):
         return serializer.save(owner=self.request.user)
