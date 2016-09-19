@@ -27,6 +27,17 @@ class HomeView(View):
         return render(request, "photos/home.html", context)
 
 
+class PhotoQuerySet(object):
+
+    @staticmethod
+    def get_photos_by_user(user):
+        possible_photos = Photo.objects.all().select_related("owner")
+        if not user.is_authenticated():
+            possible_photos = possible_photos.filter(visibility=VISIBILITY_PUBLIC)
+        elif not user.is_superuser:
+            possible_photos = possible_photos.filter(Q(visibility=VISIBILITY_PUBLIC) | Q(owner=user))
+        return possible_photos
+
 class PhotoDetailView(View):
 
     def get(self, request, pk):
@@ -36,11 +47,7 @@ class PhotoDetailView(View):
         :param pk: clave primaria de la foto a recuperar
         :return: objeto HttpResponse con los datos de la respuesta
         """
-        possible_photos = Photo.objects.filter(pk=pk).select_related("owner")
-        if not request.user.is_authenticated():
-            possible_photos = possible_photos.filter(visibility=VISIBILITY_PUBLIC)
-        else:
-            possible_photos = possible_photos.filter(Q(visibility=VISIBILITY_PUBLIC) | Q(owner=request.user))
+        possible_photos = PhotoQuerySet.get_photos_by_user(request.user).filter(pk=pk)
         if len(possible_photos) == 0:
             return HttpResponseNotFound("La imagen que buscas no existe")
         elif len(possible_photos) > 1:
